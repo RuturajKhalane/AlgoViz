@@ -8,7 +8,7 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
-    args: ["--no-push"]   # default args; actual args will be provided in the step
+    args: ["--no-push"]
     tty: true
     securityContext:
       runAsUser: 0
@@ -33,7 +33,6 @@ spec:
       subPath: kubeconfig
     - name: workspace-volume
       mountPath: /workspace
-  # jnlp container is injected by the Jenkins Kubernetes plugin automatically
   volumes:
   - name: kubeconfig-secret
     secret:
@@ -54,7 +53,7 @@ spec:
     IMAGE    = "${env.REGISTRY}/${env.REPO}/${env.APP}:${env.TAG}"
     NAMESPACE = 'ai-ns'
     PROJECT_SUBDIR = 'AlgoViz'
-    # Kaniko context path inside the pod (workspace is mounted at /workspace)
+    // Kaniko context path inside the pod (workspace is mounted at /workspace)
     CONTEXT_DIR = "/workspace/${env.PROJECT_SUBDIR}"
   }
 
@@ -68,13 +67,12 @@ spec:
 
     stage('Create docker config for Kaniko') {
       steps {
-        // create a docker config.json that Kaniko will use for auth
         withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+          // run in the default jnlp container (injected by the plugin)
           container('jnlp') {
             sh '''
               set -e
               mkdir -p /workspace/.docker
-              # create basic docker config.json for Kaniko auth
               AUTH=$(printf "%s:%s" "$NEXUS_USER" "$NEXUS_PASS" | base64 -w0)
               cat > /workspace/.docker/config.json <<EOF
 {
@@ -85,9 +83,7 @@ spec:
   }
 }
 EOF
-              # Mirror the config into the kaniko mount (docker-config emptyDir is mounted to /kaniko/.docker in kaniko)
-              cp -r /workspace/.docker/* /kaniko/.docker/ || true
-              ls -la /kaniko/.docker || true
+              ls -la /workspace/.docker || true
             '''
           }
         }
@@ -97,12 +93,19 @@ EOF
     stage('Build & Push (Kaniko)') {
       steps {
         container('kaniko') {
-          // Kaniko needs --context pointing to the repo directory and --destination for the image
-          // We use --insecure and --skip-tls-verify for the insecure registry (adjust if your registry has TLS)
           sh '''
             set -e
+            echo "Preparing Kaniko docker config..."
+            # Copy config generated in workspace into kaniko's docker config mount
+            if [ -d /workspace/.docker ]; then
+              cp -r /workspace/.docker/* /kaniko/.docker/ || true
+            fi
+            echo "Config files in /kaniko/.docker:"
+            ls -la /kaniko/.docker || true
+
             echo "Context: ${CONTEXT_DIR}"
             ls -la ${CONTEXT_DIR}
+
             /kaniko/executor \
               --context ${CONTEXT_DIR} \
               --dockerfile ${CONTEXT_DIR}/Dockerfile \
@@ -124,7 +127,6 @@ EOF
             sh '''
               set -e
               kubectl get ns ${NAMESPACE} || kubectl create ns ${NAMESPACE}
-              # create or replace secret in the target namespace so Kubernetes pods can pull the image
               kubectl delete secret nexus-secret -n ${NAMESPACE} --ignore-not-found
               kubectl create secret docker-registry nexus-secret \
                 --namespace ${NAMESPACE} \
@@ -142,8 +144,6 @@ EOF
         container('kubectl') {
           sh '''
             set -e
-            # If your k8s manifest references the image directly, substitute it here.
-            # Example: replace __IMAGE__ placeholder in deployment manifest
             if grep -q "__IMAGE__" k8s/deployment.yaml 2>/dev/null; then
               sed -e "s|__IMAGE__|${IMAGE}|g" k8s/deployment.yaml > /workspace/deployment.tmp.yaml
               kubectl apply -n ${NAMESPACE} -f /workspace/deployment.tmp.yaml
@@ -151,7 +151,6 @@ EOF
               kubectl apply -n ${NAMESPACE} -f k8s/deployment.yaml
             fi
 
-            # apply service if present
             if [ -f k8s/service.yaml ]; then
               kubectl apply -n ${NAMESPACE} -f k8s/service.yaml
             fi

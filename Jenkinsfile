@@ -15,7 +15,7 @@ spec:
     - name: DOCKER_TLS_CERTDIR
       value: ""
   - name: kubectl
-    image: bitnami/kubectl:1.27
+    image: bitnami/kubectl:latest
     command: ["cat"]
     tty: true
     securityContext:

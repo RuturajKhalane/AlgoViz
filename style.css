@@ -1,0 +1,255 @@
+/* Basic reset for padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+/* Root variables for light and dark mode */
+:root {
+    --bg-color-light: #f4f4f4;
+    --text-color-light: #333;
+    --bg-color-dark: #1c1c1c;
+    --text-color-dark: #f4f4f4;
+    --bar-color-light: #15ec61; /* Normal bars */
+    --bar-color-dark: #66bb6a;
+    --bar-compared: #FFA500; /* Compared bars */
+    --bar-swapped: #f44336; /* Swapped bars */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c1c1c;
+    color: white;
+}
+
+body.dark-mode {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+h1 {
+    margin-top: 20px; /* Reduced top margin */
+    font-size: 2em;
+}
+
+button {
+   margin: 10px;
+   padding: 15px 45px;
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: black;            
+   border-radius: 10px;
+   display: block;
+ }
+
+ button:hover {
+   background-position: right center; /* change the direction of the change here */
+   cursor: pointer;
+   text-decoration: none;
+ }
+
+
+
+/* Container for the bars */
+#arrayContainer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 300px;
+    gap: 2px;
+    overflow-x: auto;
+    width: 90%;
+    max-width: 1000px;
+    padding: 10px;
+    perspective: 1000px; 
+}
+/* Bar styling */
+.bar {
+    background-color: var(--bar-color-light);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    flex:1;
+    width: calc((100% - (var(--array-size) - 1) * 2px) / var(--array-size)); /* Adjusted width */
+}
+
+body.dark-mode .bar {
+    background-color: var(--bar-color-dark);
+}
+
+.bar.compared {
+    background-color: var(--bar-compared); /* Orange for compared bars */
+}
+
+.bar.swapped {
+    background-color: var(--bar-swapped); /* Red for swapped bars */
+    transform: translatez(20px);
+    transform: translatex(20px);
+    transform: translatey(20px);   /* Lifts only during swapping */
+    transition: transform 1s ease-in-out;
+}
+
+
+/* Change the color of the bar when hovered */
+.bar:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}
+
+
+/* Additional styles for controls */
+.controls {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+input[type="range"] {
+    width: 200px;
+    margin-right: 10px;
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    visibility: hidden;
+}
+
+#darkModeToggle {
+    margin: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: var(--bar-color-light);
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode #darkModeToggle {
+    background-color: var(--bar-color-dark);
+}
+
+/* Additional styling for the new elements */
+.algorithm-selection {
+    margin: 20px 0;
+}
+
+.algorithm-selection label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#algorithmSelect {
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.case-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.case-buttons button {
+    padding: 10px 20px;
+    font-size: 14px; /* Smaller size for the buttons */
+    cursor: pointer;
+    margin: 5px;
+}
+
+#algorithmDetailsBox {
+    margin-top: 30px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 90%;
+    max-width: 600px;
+    background-color: #f9f9f9;
+}
+
+#algorithmDetails {
+    white-space: pre-wrap; /* Ensure the content is displayed as it is */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 48px;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Ensure text is visible in dark mode */
+body.dark-mode #algorithmDetails,
+body.dark-mode .case-buttons button {
+    color: white;
+    background-color: #333;
+}
+
+body.dark-mode #algorithmDetailsBox {
+    background-color: #1c1c1c;
+    border: 1px solid #444;
+}
+
+
+/* Symbol for tracking the current bubble */
+.bar-symbol {
+    position: relative;
+    top: -20px; /* Adjust position above the bar */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #f44336; /* Red color for the symbol */
+}
+
+.sortingSection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.arrayContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#arenaContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#timelineControls{
+    display: flex;
+    justify-content:space-evenly;
+}
+
+.infoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#additionalInfo{
+    padding-left: 100px;
+    color: white;
+}
+
+#algorithmDetailsBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

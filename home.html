@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualizer</title>
+    <link rel="stylesheet" href="">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #171c1c;
+    color: white;
+    margin: 0;
+    
+}
+header {
+    background-color: #171c1c;
+    color: white;
+    padding: 20px 40px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    font-size: 24px; /* Larger font size for logo */
+    font-weight: bold; /* Bold text for emphasis */
+}
+nav .logo img {
+    width: 40px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Align the image vertically */
+}
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease; 
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    text-align: center;
+    padding: 100px 20px;
+    background-color: #171c1c;
+    color: white;
+    overflow: hidden; 
+}
+.hero-title {
+    background: linear-gradient(270deg, #ffcc00, #ff6699, #66ccff);
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 2s ease infinite; 
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: space-evenly; 
+    /* gap: 70px;  */
+    flex-wrap: wrap;    
+}
+
+.features {
+    padding: 50px 20px;
+    text-align: center;
+}
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s; /* Smooth transition */
+    transform-style: preserve-3d; /* Enable 3D effect */
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide back face */
+}
+
+.card-back {
+    transform: rotateY(180deg); /* Rotate back face */
+}
+
+.feature-card:hover .card-inner {
+    transform: rotateY(180deg); /* Rotate the card on hover */
+}
+.feature-card {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px); 
+    transition: opacity 0.5s ease, transform 0.5s ease; 
+    overflow: hidden; 
+    perspective: 800px;
+    z-index: 10;
+    height: 400px;
+    opacity: 0;
+}
+
+.feature-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0; 
+}
+
+feature-card h3, .feature-card p {
+    transform: translateY(20px); 
+    opacity: 0; 
+    transition: transform 0.5s ease, opacity 0.5s ease; 
+}
+
+.feature-card:hover h3, .feature-card:hover p {
+    transform: translateY(0); 
+    opacity: 1;
+}
+
+.feature-card:hover {
+    animation: flipCard 2s forwards;
+    transform: scale(1.05); 
+}
+@keyframes flipCard {
+    0% {
+        transform: perspective(600px) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(600px) rotateY(15deg);
+    }
+    100% {
+        transform: perspective(600px) rotateY(0deg);
+    }
+}
+
+.image-slider {
+    position: relative;
+    background-size:contain;
+    max-width: 100%;
+    margin: auto;
+    height: 600px;
+    overflow: hidden;
+    z-index: 1;
+
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    transition: opacity 1s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #2f3535;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color:black; 
+}
+
+
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
+}
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+footer {
+    background: #171c1c; /* Footer background color */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around the footer */
+    text-align: center; /* Center align text */
+}
+
+footer h2 {
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+footer form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    margin: 20px 0; /* Margin around the form */
+    max-width: 400px; /* Max width for the form */
+    margin-left: auto; /* Center the form */
+    margin-right: auto; /* Center the form */
+}
+
+footer label {
+    margin: 10px 0 5px; /* Space around labels */
+    font-weight: bold; /* Bold text for labels */
+}
+
+footer input, footer textarea {
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Space below input fields */
+    font-size: 16px; /* Font size for input fields */
+}
+
+footer textarea {
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 100px; /* Minimum height for the textarea */
+}
+
+footer button {
+    padding: 10px; /* Padding for the button */
+    background-color: #ffcc00; /* Button background color */
+    color: black; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    font-size: 16px; /* Font size for button */
+}
+
+footer button:hover {
+    background-color: #ff6699; /* Change color on hover */
+}
+
+footer p {
+    margin-top: 10px; /* Space above paragraphs */
+}
+
+footer a {
+    color: #ffcc00; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+    </style>
+</head>
+<body>
+    <header style="margin-top: 10px;">
+        <nav>
+            <div class="logo"><img src="algorithm visualizer logo.png" alt="">   Algorithm Visualizer</div>
+            <ul>
+                <li class="hero-title"><a href="iiindex.html">Main Visualizer</a></li>
+                <li class="hero-title"><a href="arena.html">Arena Mode</a></li>
+                <li class="hero-title"><a href="analyzise.html">Algorithm Recommender</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <main>
+        <section class="hero">
+            <h1 class="hero-title"  style="font-size: 50px;">Welcome to the Algorithm Visualizer</h1>
+            <p class="hero-description" style="font-size:20px;">Visualize and understand algorithms in a fun and interactive way!</p>
+            <video autoplay loop muted class="background-video" style="padding-top: 2%;">
+                <source src="eeeeeeeeeeeee.mp4" type="video/mp4" >
+                Your browser does not support the video tag.
+            </video>
+            <button><a href="iiindex.html" class="cta-button" style="padding: 15px 30px; font-size: 18px; color: white;">Try Now</a></button>
+           
+        </section>
+        
+        
+        <section class="features">
+            <h2>Features</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <a href="iiindex.html" target="_blank"><img src="newmainviz.webp" alt="Main Visualizer" class="feature-image"></a>
+                            <h3>Main Visualizer</h3>
+                            <p>Visualize sorting algorithms with customizable array sizes and types.</p>
+                        </div>
+                        <div class="card-back">
+                            <h3>More Info</h3>
+                            <p>The Main Visualizer allows you to see how different sorting algorithms work in real-time. You can adjust the array size and type to see how each algorithm performs.</p>
+                            <ul>
+                                <li><strong>Supported Algorithms:</strong> Bubble Sort, Quick Sort, Merge Sort, and more.</li>
+                                <li><strong>Customization:</strong> Change array sizes and types (random, sorted, reverse).</li>
+                                <li><strong>Interactive:</strong> Step through the algorithm to see each operation.</li>
+                            </ul>
+                            <button onclick="location.href='iiindex.html'" class="back-button">Go to Main Visualizer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <a href="arena.html" target="_blank"><img src="feature3.webp" alt="Arena Mode" class="feature-image"></a>
+                            <h3>Arena Mode</h3>
+                            <p>Compare multiple algorithms side by side in a competitive environment.</p>
+                        </div>
+                        <div class="card-back">
+                            <h3>More Info</h3>
+                            <p>Arena Mode lets you pit different sorting algorithms against each other. Watch them compete in real-time and see which one performs better under various conditions.</p>
+                            <ul>
+                                <li><strong>Real-Time Comparison:</strong> See how algorithms stack up against each other.</li>
+                                <li><strong>Custom Scenarios:</strong> Set up different scenarios to test algorithm efficiency.</li>
+                                <li><strong>Statistics:</strong> View performance metrics for each algorithm.</li>
+                            </ul>
+                            <button onclick="location.href='arena.html'" class="back-button">Go to Arena Mode</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <a href="analyzise.html" target="_blank"><img src="newanalytic.webp" alt="Algorithm Recommender" class="feature-image"></a>
+                            <h3>Algorithm Recommender</h3>
+                            <p>Get recommendations based on your data input for optimal sorting.</p>
+                        </div>
+                        <div class="card-back">
+                            <h3>More Info</h3>
+                            <p>The Algorithm Recommender analyzes your data and suggests the most efficient sorting algorithm based on your specific needs.</p>
+                            <ul>
+                                <li><strong>Data Analysis:</strong> Input your data characteristics for tailored recommendations.</li>
+                                <li><strong>Algorithm Suggestions:</strong> Get suggestions based on time complexity and data type.</li>
+                                <li><strong>Learning Tool:</strong> Understand why certain algorithms are recommended.</li>
+                            </ul>
+                            <button onclick="location.href='analyzise.html'" class="back-button">Go to Algorithm Recommender</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="image-slider">
+        <div class="slides">
+            <div class="slide">
+                <img src="slider1.jpeg" alt="Image 1" loading="lazy">
+            </div>
+
+            <div class="slide">
+                <img src="newslider.webp" alt="Image 2" loading="lazy">
+            </div>
+            <div class="slide">
+                <img src="slider3.png" alt="Image 3" loading="lazy">
+            </div>
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </section>
+    <footer>
+        <h2>Contact Us</h2>
+        <form action="https://formsubmit.co/khalaneruturaj@gmail.com" method="POST">
+            <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- Redirect after submission -->
+            <input type="hidden" name="_captcha" value="false"> <!-- Disable captcha -->
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+    
+            <button type="submit">Send Message</button>
+        </form>
+        <p>Contact Email: <a href="khalaneruturaj@gmail.com">support@example.com</a></p>
+        <p>© 2023 Algorithm Visualizer. All rights reserved.</p>
+    </footer>
+    <script>
+    
+let currentSlide = 0;
+
+function changeSlide(direction) {
+    const slides = document.querySelectorAll('.slide');
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    updateSlidePosition();
+}
+
+function updateSlidePosition() {
+    const slides = document.querySelector('.slides');
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+// Auto slide every 5 seconds
+setInterval(() => changeSlide(1), 5000);
+
+// Initialize the position of the slides
+updateSlidePosition();
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const featureCards = document.querySelectorAll('.feature-card');
+
+    const observerOptions = {
+        root: null, // Observe in the viewport
+        threshold: 0.5 // Trigger when 50% of the element is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1; // Fade in
+                entry.target.style.transform = 'translateY(0)'; // Move to default position
+                observer.unobserve(entry.target); // Stop observing once animated
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    featureCards.forEach(card => observer.observe(card));
+});
+
+
+    </script>
+</body>
+</html>

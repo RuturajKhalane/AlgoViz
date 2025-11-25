@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis & Sorting Recommendation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .form-container {
+            background: #2d3748;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+        }
+        .recommend-btn {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .recommend-btn:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+        .analysis {
+            margin-top: 20px;
+            background: #1e3c72;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Sort Recommendation</h1>
+        <form id="analysisForm">
+            <div class="form-group">
+                <label for="userArray">Enter your array (comma-separated):</label>
+                <input type="text" id="userArray" name="userArray" placeholder="e.g., 1, 2, 3, 4, 5" required>
+            </div>
+            <button type="button" class="recommend-btn" id="analyzeButton">Analyze & Recommend</button>
+        </form>
+        <div id="analysisResult" class="analysis" style="display: none;">
+            <!-- Analysis and recommendation will appear here -->
+        </div>
+    </div>
+
+    <script src="analyze.js"></script>
+</body>
+</html>

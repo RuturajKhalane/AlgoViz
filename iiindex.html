@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="ssstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <a href="home.html" target="_blank" class="hero-title">Sorting Algorithm Visualizer</a>
+        <div class="navigate-button">
+        <div class="tooltip-container">
+            <a href="arena.html" target="_blank">
+                <img src="sword.png" alt="Sword Icon" style="height: 35px;">
+            </a>
+            <span class="tooltip-text">View Arena</span>
+        </div>
+        <div class="tooltip-container">
+            <a href="analyzise.html" target="_blank">
+                <img src="analytics.svg" alt="Analytics Icon" style="height: 35px;">
+            </a>
+            <span class="tooltip-text">Open Analytics</span>
+        </div>
+    </div>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Controls</h2>
+            <div class="control-group">
+                <label id="arraySizeLabel">Array Size: 20</label>
+                <input type="range" id="arraySize" min="5" max="100" value="20">
+            </div>
+            <div class="control-group">
+                <label for="algorithmSelect">Select Algorithm:</label>
+                <select id="algorithmSelect">
+                    <option value="Bubble Sort">Select</option>
+                    <option value="Bubble Sort">Bubble Sort</option>
+                    <option value="Selection Sort">Selection Sort</option>
+                    <option value="Insertion Sort">Insertion Sort</option>
+                    <option value="Merge Sort">Merge Sort</option>
+                    <option value="Quick Sort">Quick Sort</option>
+                    <option value="Count Sort">Count Sort</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="speedSlider">Sorting Speed:</label>
+                <span id="speedLabel" style="color: white;">400ms</span>
+                <input type="range" id="speedSlider" min="100" max="1000" value="400">
+            </div>
+            <button id="generateArray" class="icon-button">
+                <i class="fa fa-random"></i> Generate Random Array
+            </button>
+            <div class="case-buttons">
+                <button id="generateNearlySortedArray">Generate Nearly Sorted Array</button>
+                <button id="bestCaseButton">Best Case</button>
+                <button id="worstCaseButton">Worst Case</button>
+                <div class="infoBuon">
+                    <button id="showInfoButton">Show Additional Info</button>
+                </div>
+            </div>
+            <div id="additionalInfo" style="display: none;">
+                <span id="swapsInfo"></span>
+                <br>
+                <span id="loopRunsInfo"></span>
+                <br>
+                <span id="complexityInfo"></span>
+                <br>
+                <span id="executionTimeInfo"></span>
+                <br>
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="arrayContainer"></div>
+            <div id="algorithmStepDisplay"></div>
+    
+            <div class="controls" id="timelineControls">
+                <button class="fa-solid fa-backward" id="prevIterationButton" title="Previous Iteration Button"></button>
+                <button class="fa-solid fa-arrow-left" id="prevStepButton"></button>
+                <button id="startButton">Start</button>
+                <button id="pauseButton" disabled>Pause</button>
+                <button class="fa-solid fa-arrow-right" id="nextStepButton"></button>
+                <button class="fa-solid fa-forward" id="nextIterationButton" title="Next Iteration Button"></button>
+            </div>
+            <div id="algorithmDetailsBox">
+                <h2>Algorithm Details:</h2>
+                <pre id="algorithmDetails"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://kit.fontawesome.com/22ca037954.js" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>

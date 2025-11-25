@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualization</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+   <a href="home.html" style="color: white;"><h1>Algorithm Visualization</h1></a> 
+    <div class="container">
+        <label id="arraySizeLabel">Array Size: 20</label>
+        <input type="range" id="arraySize" min="5" max="100" value="20">
+        <button id="generateArray">Generate Random Array</button>
+    </div>
+    
+    <!-- Dropdown for algorithm selection -->
+    <div class="algorithm-selection">
+        <label for="algorithmSelect">Select Algorithm:</label>
+        <select id="algorithmSelect">
+            <option value="Bubble Sort">Select</option>
+            <option value="Bubble Sort">Bubble Sort</option>
+            <option value="Selection Sort">Selection Sort</option>
+            <option value="Insertion Sort">Insertion Sort</option>
+            <option value="Merge Sort">Merge Sort</option>
+            <option value="Quick Sort">Quick Sort</option>
+            <option value="Count Sort">Count Sort</option>
+        </select>
+    </div>
+
+    <label for="speedSlider">Sorting Speed:</label>
+<input type="range" id="speedSlider" min="0" max="1000" value="400" step="100">
+<span id="speedLabel">400ms</span>
+
+
+    <!-- Array container -->
+    <div id="arrayContainer"></div>
+    <!-- Display Algorithm Steps -->
+     <div class="upperContanier">
+    <div id="algorithmStepDisplay" style="margin-top: 20px; font-size: 48px; text-align: center;"></div>
+    <div id="timelineControls">
+        <button class="fa-solid fa-backward" id="prevIterationButton" title="Previous Iteration Button"></button>
+        <button class="fa-solid fa-arrow-left" id="prevStepButton" title="Previous Step Button"></button>
+        <button id="startButton">Start Sorting</button>
+        <button id="pauseButton" disabled>Pause</button>
+        <button class="fa-solid fa-arrow-right" id="nextStepButton" title="Next Step Button"></button>
+        <button class="fa-solid fa-forward" id="nextIterationButton" title="Next Iteration Button"></button>
+    </div>
+<div class="infoContainer">
+    <div class="infoBuon">
+        <button id="showInfoButton">Show Additional Info</button>
+    </div>
+    <div id="additionalInfo" style="display: none;">
+        <span id="swapsInfo"></span>
+        <br>
+        <span id="loopRunsInfo"></span>
+        <br>
+        <span id="complexityInfo"></span>
+        <br>
+        <span id="executionTimeInfo"></span>
+        <br>
+    </div>
+     <!-- Box to display algorithm details -->
+     <div id="algorithmDetailsBox">
+        <h3>Algorithm Details:</h3>
+        <pre id="algorithmDetails"></pre>
+    </div>
+</div>
+    <!-- Buttons for array cases -->
+    <div class="case-buttons">
+        <button id="generateNearlySortedArray">Generate Nearly Sorted Array</button>
+        <button id="bestCaseButton">Best Case</button>
+        <button id="worstCaseButton">Worst Case</button>
+    </div>
+    
+   
+</div>
+<script src="https://kit.fontawesome.com/22ca037954.js" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>
